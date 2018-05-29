@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<!-- Begin Header -->
+<head>
+
+<!-- Meta Content, Author, Keywords -->
+<meta name="author" content="Nishith R. Patel" />
+<meta name="keywords" content="Stanford Case Study, Economic Optimization, Heating Ventilation and Air Condition Systems, HVAC, Model Predictive Control, Airside, Waterside, MPC" />
+
+<!-- Stylesheet to use -->
+<link rel="stylesheet" type="text/css" href="./primary.css">
+
+<!-- Typesetting Math -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+<!-- Title which appears on the top of the browser -->
+<title>HVAC Case Study</title>
+
+</head>
+
+
+<!-- Begin Body -->
+<body>
+
+<!-- Google Tag Manager Code (for Analytics tracking) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WC8257"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);t do we want solve)
+})(window,document,'script','dataLayer','GTM-WC8257');</script>
+<!-- End Google Tag Manager Code -->
+
+<!--Begin Header -->
+<div id="header">
+
+<!-- Make title/logo -->
+<h1 id="maintitle"><a href="./index.html"><span class="titlecolor1">Stanford </span><span class="titlecolor2">Case Study</span></a></h1>
+
+</div>
+
+<!-- Make a horizontal rule -->
+<div id="horizrule"></div>
+
+<!-- Start mainpage (horizontally cental, white part) -->
+<div id="mainpage">
+
+<!-- Isolate the vertically central part of mainpage -->
+<div id="centerpage">
+
+<!-- Begin sidebar and contentbar -->
+<table>
+<tr>
+<!-- Begin sidebar -->
+<td id="sidebar">
+<ul>
+<li><a href="./index.html">Home</a></li>
+<li><a href="./description.html">Description</a></li>
+<li><a href="./models.html">Models</a></li>
+<li><a href="./downloads.html">Downloads</a></li>
+<li><a href="./decomposition.html">Decomposition</a></li>
+<li><a href="./publications.html">Publications</a></li>
+<li><a href="./sponsors.html">Sponsors</a></li>
+</ul>
+</td>
+
+<td id="contentbar">
+
+<i>
+This website is currently under construction. Please check back later.
+</i>
+
+<br/><br/>
+<h3> Models </h3>
+
+<h4> Airside System </h4>
+
+<center>
+<img src="./files/heat-transfer.png" alt="Airside System Description and Variables" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+
+In the airside system, models are needed to describe temperature dynamics. 
+The dynamics of cooling a single zone or building can be represented by an energy balance. One approach is to lump all of the zone mass and air properties into a single zone temperature.
+Other models can also be used to describe the airside system dynamics. Differential equations can be written to model the zone air and mass temperatures separately, and the mass temperature can be further separated into a shallow mass temperature and deep mass temperature.
+% \MJR{I think there should be some citations here, since there aren't many details, and we don't actually do any of those.}
+
+For simplicity, we considered the lumped model for the temperature of zone $i$ as given by
+$$
+C_i \frac{dT_i}{dt} = - H_i (T_i - T_a) - \sum_{j \neq i} \beta_{ij} (T_i - T_j) - \dot{Q}_{c,i} + \dot{Q}
+$$
+in which $C_i$ is the thermal capacitance of the zone, $H_i$ is a scaled heat transfer coefficient with the ambient, $T_a$ is the ambient temperature, $\dot{Q}_{c,i}$ is the cooling rate from the HVAC system, $\dot{Q}_{\mathrm{other},i}$ is an external load place on the zone, and $\beta_{ij}$ characterizes the degree of coupling between zones $i$ and $j$. If zones $i$ and $j$ are not adjacent, then $\beta_{ij} = 0$. 
+
+Since the supervisory control system determines the zone temperature setpoints, a model is also need to relate the zone temperature setpoint $T_{\mathrm{sp},i}$ to the cooling rate $\dot{Q}_{c,i}$ delivered to the zone.  Using an ideal proportional-integral (PI) controller, the linear cooling duty controller model is given by
+$$
+\begin{split}
+\dot{Q}_{c,i} &= \dot{Q}_{\mathrm{ss},i} + K_{\mathrm{c},i} \left[ \varepsilon_i + \frac{1}{\tau_{\mathrm{I},i}} \int_0^t \varepsilon_i (t') dt' \right] \\
+\varepsilon_i &= T_{\mathrm{sp},i} - T_i \\
+\end{split}
+$$
+in which $K_{\mathrm{c},i}$ and $\tau_{\mathrm{I},i}$ are the PI controller parameters and $\varepsilon_i$ is the tracking error.
+Saturation is included as feature for airside PI due to constraints on the maximum $\dot{Q}_{c,i}$ that is achievable.
+Since it may take zones up to an hour to respond to a setpoint change, the dynamics of zone PI controllers cannot be neglected by the supervisory control layer.
+For convenience, both models can be converted to state-space form.
+
+<h4> Waterside System </h4>
+
+<center>
+<img src="./files/watersideequipment.png" alt="Waterside System Description and Variables" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+
+In the waterside system, models are needed for equipment electricity consumption and storage tank dynamics.
+Equipment models are static, determining resource consumption as a function of relevant inputs for a given steady-state operating point.
+While these units do experience transient dynamics during startup and shutdown, these effects are moderated by local regulatory controllers, and rapid startups and shutdowns are prevented by enforcing explicit dwell time constraints in the waterside optimization problem.
+By contrast, storage tank models are necessarily dynamic, as storage tanks are used for time-shifting of demand.
+
+For the chilling plant used in the case study, the three types of equipment are chillers, cooling towers, and pumps.
+Figure~\ref{fig:watersideequipment} shows the mass and energy flows for this system.
+Note that the real system consists of multiple pieces of each type of equipment arranged in parallel.
+Each chiller is modeled using the semi-empirical Gordon-Ng model, \cite{lee:liao:lu:2012} defined below:
+%
+$$
+    \Wch \coloneqq \left(\Qch + a_1 \Tchws + a_2 \left(1 - \frac{\Tchws}{\Tcws} \right) \right) \frac{\Tcws}{\Tchws - a_3 \Qch} - \Qch
+$$
+%
+The parameters $a_1$, $a_2$, and $a_3$ are obtained via regression with measured data.
+For the purposes of optimization, the temperatures are assumed to be fixed parameters.
+Each cooling tower uses a a simplified effectiveness model \cite{jin:cai:lu:lee:chiang:2007} for calculating cooling duty, with a simple cubic fit for fan electricity \cite{braun:diderrich:1990}.
+%
+\begin{gather}
+    \Qct = \Qch + \Qch \coloneqq \frac{c_1 (\mcw)^{c_3}}{1 + c_2 \left(\frac{\mcw}{\mair}\right)^{c_3}} (\Tcwr - \Twb) \label{eq:towerheat} \\
+    \Wct \coloneqq \kappa (\mair)^3 \label{eq:towerfan}
+\end{gather}
+%
+With fixed $\Tcwr$ and known $\Twb$, \eqref{eq:towerheat} can be rearranged to solve for the required $\mair$, which is then used in \eqref{eq:towerfan} for electricity calculation.
+Coefficients $c_1$, $c_2$, $c_3$, and $\kappa$ are obtained via regression.
+Finally, pumps are modeled with a black-box empirical model
+%
+\begin{equation} \label{eq:pump}
+    \Wpump \coloneqq b_1 \ln\left(1 + b_2 \Vchw\right) + b_3 \Vchw + b_4
+\end{equation}
+%
+with regression coefficients $b_1$ through $b_4$.
+Note that the flows $\Vcw$ and $\mcw$ are obtained from $\Qch$ and $\Qct$ via the appropriate constant-heat-capacity energy balances.
+
+<center>
+<img src="./files/stratifiedtank.png" alt="Stratified Tank" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+
+Active storage tanks are modeled using a two-layer stratified tank model similar to \citet{ma:borrelli:hencey:coffey:bengea:haves:2012}.
+As diagrammed in Figure~\ref{fig:stratifiedtank}, the hot and cold sections are each assumed to be uniform in temperature, with heat exchange between the two layers (proportional to the temperature difference).
+Total volume $\Vhot + \Vcold$ is held constant.
+The dynamic model is a straightforward enthalpy balance (using known temperatures for streams entering the tank) and is omitted from the text for brevity.
+
+In chilled water tanks, the main quantity of interest is the enthalpy of the cold section $\Hcold$.
+For the purposes of optimization, the nonlinear tank model is replaced by a simple linear approximation of the form
+%
+\begin{equation} \label{eq:storageModel}
+    \frac{ds}{dt} = -\sigma s + \eta \dot{Q}_\text{storage}
+\end{equation}
+%
+in which $s \coloneqq \Hcold$ is the enthalpy of the cold section and  $\dot{Q}_\text{storage}$ is the rate of cold enthalpy inflow (positive) or outflow (negative).
+The coefficients $\sigma$ and $\eta$ are identified from data.
+Figure~\ref{fig:storagetankid} shows simulations of the approximate linear model alongside the full nonlinear model.
+Even over the full 10-day horizon, the linear model fits very well, and thus is sufficient for optimization.
+
+<br/><br/>
+</td>
+
+</tr>
+
+</table>
+
+
+</div>
+
+</div>
+
+<!-- Make a horizontal rule -->
+<div id="horizrule"></div>
+
+</body>
+
+</html>

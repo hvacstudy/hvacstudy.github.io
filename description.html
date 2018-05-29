@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<!-- Begin Header -->
+<head>
+
+<!-- Meta Content, Author, Keywords -->
+<meta name="author" content="Nishith R. Patel" />
+<meta name="keywords" content="Stanford Case Study, Economic Optimization, Heating Ventilation and Air Condition Systems, HVAC, Model Predictive Control, Airside, Waterside, MPC" />
+
+<!-- Stylesheet to use -->
+<link rel="stylesheet" type="text/css" href="./primary.css">
+
+<!-- Typesetting Math -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+<!-- Title which appears on the top of the browser -->
+<title>HVAC Case Study</title>
+
+</head>
+
+
+<!-- Begin Body -->
+<body>
+
+<!-- Google Tag Manager Code (for Analytics tracking) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WC8257"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);t do we want solve)
+})(window,document,'script','dataLayer','GTM-WC8257');</script>
+<!-- End Google Tag Manager Code -->
+
+<!--Begin Header -->
+<div id="header">
+
+<!-- Make title/logo -->
+<h1 id="maintitle"><a href="./index.html"><span class="titlecolor1">Stanford </span><span class="titlecolor2">Case Study</span></a></h1>
+
+</div>
+
+<!-- Make a horizontal rule -->
+<div id="horizrule"></div>
+
+<!-- Start mainpage (horizontally cental, white part) -->
+<div id="mainpage">
+
+<!-- Isolate the vertically central part of mainpage -->
+<div id="centerpage">
+
+<!-- Begin sidebar and contentbar -->
+<table>
+<tr>
+<!-- Begin sidebar -->
+<td id="sidebar">
+<ul>
+<li><a href="./index.html">Home</a></li>
+<li><a href="./description.html">Description</a></li>
+<li><a href="./models.html">Models</a></li>
+<li><a href="./downloads.html">Downloads</a></li>
+<li><a href="./decomposition.html">Decomposition</a></li>
+<li><a href="./publications.html">Publications</a></li>
+<li><a href="./sponsors.html">Sponsors</a></li>
+</ul>
+</td>
+
+<td id="contentbar">
+
+<i>
+This website is currently under construction. Please check back later.
+</i>
+
+<br/><br/>
+<h3> Description </h3>
+
+<!--
+Include a brief description of the Stanford system (central plant, size, pumps, chillers, buildings, zones, etc.)
+<br/>
+Then write down control problem statement (what decisions must be made and what is the goal, i.e., minimize cost).
+-->
+
+<center>
+<img src="./files/hvac.png" alt="Large-Scale Airside and Waterside HVAC System" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+
+The HVAC system for the case study is a central plant that services the cooling needs of a 500-zone campus.
+The HVAC plant has eight conventional chillers along with their supporting pumps and cooling towers.
+For simplicity, we do not consider heating equipment, such as boilers or heat-recovery chillers.
+Each of the chillers has minimum and maximum cooling capacities of 2.5 MW and 12.5 MW, yielding a total plant capacity of 100 MW cooling.
+Chilled water supply temperature is held constant at 5.5 $^\circ$C.
+In addition to the passive thermal energy storage present in the form of building mass, there is active thermal energy storage with a chilled water tank.
+The chilled water TES storage tank has a maximum capacity of 100 MWh cooling.
+
+The 500-zone campus contains 25 buildings, each with 20 zones that have independent local temperature controllers.
+All zone temperatures need to be kept between 20.5 and 22.5 $^\circ$C due to occupant comfort requirements.
+The models for the equipment and zones are presented in Section~\ref{sec:models}.
+The airside models describe the temperature dynamics in each of the 500 zones, and the waterside models describe the power consumption of the central plant equipment.
+
+The aim of the control system is to minimize costs in the presence of time-varying electricity prices and a peak demand charge as well as environmental disturbances such as weather while meeting constraints on comfort and equipment. 
+The control system must determine the zone temperature setpoints and waterside equipment operation schedule.
+
+<br/><br/>
+</td>
+
+</tr>
+
+</table>
+
+
+</div>
+
+</div>
+
+<!-- Make a horizontal rule -->
+<div id="horizrule"></div>
+
+</body>
+
+</html>

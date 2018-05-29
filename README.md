@@ -1,1 +1,0 @@
-# hvacstudy.github.io

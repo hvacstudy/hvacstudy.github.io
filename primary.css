@@ -1,0 +1,425 @@
+/* Colors
+white:#FFFFFF
+lightblue:#CDFFFF
+darkblue:#0000A0
+cardinal:#C41E3A
+darksteelgray: #404040 (75% black, 25% white) (selected menu text)
+steelgray:#808080 (50% black, 50% white)
+mediumgray:#B2B2B2 (30% black, 70% white) (unselected menu text)
+lightgray:#
+silver:#C0C0C0 (25% black, 75% white)
+silvermix:#F2F2F2 (5% black, 95% white) (unselected menu background)
+white:#FFFFFF (0% black, 100% white) (selected menu background)
+color:#1E90FF; dodger blue
+gray: #D3D3D3;
+darkred: #6b0018;
+*/
+.backgroundcolor
+{
+	color:#D3D3D3; /*gray*/
+}
+
+.titlecolor1
+{
+	color:#6b0018;
+}
+
+.titlecolor2
+{
+	color:#000000; 
+}
+
+.selected
+{
+	color:#0000A0;
+}
+
+
+body
+{
+	background-color:#D3D3D3;
+	font-size:100%;
+	margin:0px;
+	padding:0px;
+	font-family:'lucida sans', 'lucida sans unicode', 'lucida grande', 'trebuchet ms', helvetica, arial, sans-serif;
+}
+
+#horizrule
+{
+	width:800px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:0px;
+	padding-bottom:0px;
+	margin:auto;
+	background-color:#6b0018;
+}
+
+#header
+{
+	width:760px;
+	padding:0px;
+	margin:auto;
+	height:150px;
+}
+
+#header #maintitle
+{
+	text-transform:lowercase;
+	font-family:'Trebuchet MS', Arial, sans-serif;
+	font-weight:900;
+	font-size:50px;
+	letter-spacing:-2px;
+	padding:0px;
+	margin-top:5px;
+	margin-bottom:2px;
+}
+#header h1#maintitle a
+{
+	text-decoration:none;
+	font-color:inherit;
+}
+
+#header h5#univline
+{
+	font-family:Tahoma, 'Trebuchet MS', sans-serif;
+	position:relative;
+	left:70px;
+	top:-3px;
+	margin:0px;
+	padding:0px;
+}
+
+#header h5#univline a
+{
+	text-decoration:none;
+	font-color:inherit;
+}
+
+#footer
+{
+	width:760px;
+	padding:0px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+	height:auto;
+	clear:both;
+	text-align:center;
+	font-size:0.8em;
+}
+
+#footer a
+{
+	text-decoration:none;
+	color:inherit;
+}
+
+#footer a:hover, #footer a:focus, #footer a:active
+{
+	text-decoration:underline;
+}
+
+ul#jumpbar
+{
+	margin:0px;
+	padding-left:5px;
+	padding-right:5px;
+	background-color:#000000;
+	color:#FFFFFF;
+	display:inline;
+	float:right;
+}
+
+ul#jumpbar li
+{
+	margin:0px;
+	display:inline;
+	padding-right:2px;
+	padding-left:0px;
+}
+
+ul#jumpbar li a
+{
+	color:inherit;
+	text-decoration:none;
+	font-size:0.8em
+}
+
+ul#jumpbar li a:hover, ul#jumpbar li a:focus, ul#jumpbar li a:active
+{
+	text-decoration:underline;	
+}
+
+#mainpage
+{
+	padding:0px;
+	margin:0px;
+	background-color:#FFFFFF;
+}
+
+#centerpage
+{
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0px;
+	margin-bottom:0px;
+	width:760px;
+}
+
+#centerpage p#navbar a
+{
+	color:#0000A0;
+	text-decoration:none;
+}
+
+#centerpage p#navbar a:hover, #centerpage p#navbar a:focus, #centerpage p#navbar a:active
+{
+	color:#C41E3A;
+	text-decoration:underline;
+}
+
+
+#centerpage table
+{
+	width:760px;
+	margin:0px;
+	padding-top:0px;
+	padding-bottom:20px;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+#centerpage td
+{
+	vertical-align:top;
+}
+
+#centerpage td#sidebar
+{
+	width:150px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	padding-bottom:10px;
+	text-align:left;
+	margin:0px;
+	border-right-style:solid;
+	border-right-color:#B2B2B2;
+	border-right-width:1px;
+	color:#000000;
+}
+
+#centerpage td#contentbar
+{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom:10px;
+	text-align:left;
+	margin:0px;
+}
+
+#centerpage td#sidebar ul
+{
+	list-style-type:none;
+	padding-left:0px;
+	margin-left:0px;
+}
+
+#centerpage td#sidebar ul li
+{
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+
+#centerpage td#sidebar ul#secondlevel
+{
+	list-style-type:none;
+	padding-left:15px;
+	padding-top:1px;
+	padding-bottom:1px;
+	margin-left:0px;
+	font-size:0.8em
+}
+#centerpage td#sidebar ul#secondlevel li
+{
+	padding-top:1px;
+	padding-bottom:1px;
+}
+
+#centerpage td#sidebar ul#secondlevelh
+{
+	list-style-type:none;
+	padding-left:15px;
+	padding-top:1px;
+	padding-bottom:1px;
+	margin-left:0px;
+	font-size:0.8em
+	display:none;
+}
+#centerpage td#sidebar ul#secondlevelh li
+{
+	padding-top:1px;
+	padding-bottom:1px;
+	display:none;
+}
+
+
+#centerpage td#sidebar a
+{
+	text-decoration:none;
+	color:inherit;
+}
+
+#centerpage td#sidebar a:hover, #centerpage td#sidebar a:focus, #centerpage td#sidebar a:active
+{
+	text-decoration:underline;
+	color:#C41E3A;
+}
+
+#centerpage td#contentbar a
+{
+	text-decoration:none;
+	color:#0000A0;
+}
+
+#centerpage td#contentbar a:hover, #centerpage td#contentbar a:focus, #centerpage td#contentbar a:active
+{
+	text-decoration:underline;
+	color:#C41E3A;
+}
+
+#centerpage td#contentbar h2, #centerpage td#contentbar h3, #centerpage td#contentbar h4
+{
+	color:#6b0018;
+/* 	color:#C41E3A; */
+	text-align:left;
+}
+
+#centerpage td#contentbar ul
+{
+	list-style-type:square;
+	padding-left:0px;
+	margin-left:40px;
+}
+
+#centerpage td#contentbar ul li#small
+{
+	font-size:0.85em;
+}
+
+
+#centerpage td#contentbar
+{
+	text-align:justify;
+}
+
+#centerpage td#contentbar .heavy
+{
+	font-weight:bold;
+	font-size:inherit;
+}
+
+#centerpage td#contentbar .italics
+{
+	font-style:italic;
+}
+
+#centerpage table#minitable
+{
+	width:70%;	
+	margin:auto;
+	padding-top:2px;
+	padding-bottom:10px;
+	padding-left:0px;
+	padding-right:0px;
+	font-size:0.8em;
+}
+#centerpage table#minitable td
+{
+	width:auto;
+	padding:5px;
+	text-align:center;
+	vertical-align:middle;
+}
+
+#centerpage table#booktable
+{
+	width:100%;	
+	margin:auto;
+	padding-top:2px;
+	padding-bottom:10px;
+	padding-left:0px;
+	padding-right:0px;
+	font-size:0.8em;
+	table-layout:fixed;
+}
+#centerpage table#booktable td
+{
+	width:32%;
+	padding:5px;
+}
+
+#centerpage table#bigtable
+{
+	width:95%;	
+	margin:auto;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:0px;
+	padding-right:0px;
+	font-size:0.9em;
+}
+
+#centerpage table#bigtable td, #centerpage table#bigtable th
+{
+	width:auto;
+	max-width:50%;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:0px;
+	padding-bottom:0px;
+	text-align:left;
+	vertical-align:middle;
+	border: 1px solid black;
+
+}
+
+p#navbar
+{
+	font-size:0.75em;
+	display:inline;
+	float:right;
+	padding-right:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+	margin:0px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 760px;
+  position: relative;
+  margin: auto;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .5}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .5}
+  to {opacity: 1}
+}
+
