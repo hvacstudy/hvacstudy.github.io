@@ -78,53 +78,82 @@ This website is currently under construction. Please check back later.
 <br/><br/>
 <h3> Decomposition </h3>
 
-The aim of the release is to encourage other researchers to propose alternative control systems and to provide a common basis for performance evaluation of these strategies on a large-scale industrially relevant system. In the next section, we simulate the performance of one such control system that relies on a hierarchical two-layer structure.
+The aim of the release is to encourage researchers in the area of HVAC control to propose alternative control systems and to provide a common basis for performance evaluation of these strategies on a large-scale industrially relevant system.
+Here, we simulate the performance of one such control system that relies on a hierarchical two-layer structure.
 
+<h4> Control System </h4>
+
+We consider the two-layer hierarchical control system presented in <a href="./publications.html">Patel, Rawlings, Wenzel and Turney (2016)</a>.
+
+<br/><br/>
 <center>
 <img src="./files/decomposition.png" alt="Hierarchical Control Decomposition" style="width:600px;height:auto;max-width:100%;max-height:100%">
 </center>
+<br/>
 
-<center>
-<img src="./files/highlevelplot.png" alt="High-Level Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
-</center>
+This structure relies on using a high-level problem with aggregate models of the airside and waterside systems to perform a plant-wide economic optimization.
+The solution is then sent to low-level airside and waterside controllers that use more detailed models to compute the dispatched trajectories which meet the constraints.
+The low-level controllers follow the load computed in the high-level problem as closely as possible.
+One low-level airside controller is used per building, to ensure the problem can be solved quickly online.
 
-<center>
-<img src="./files/airsideplot.png" alt="Airside Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
-</center>
-
-<center>
-<img src="./files/watersideplot.png" alt="Waterside Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
-</center>
-
-\section{SIMULATION STUDY}
-\label{sec:simResults}
-
-\subsection{Control System}
-
-With the case study system defined, a supervisory control system can be used to make decisions. We consider the two-layer hierarchical control system presented in \citet{patel:rawlings:wenzel:turney:2016}. This structure relies on using a high-level problem with aggregate models of the airside and waterside systems to perform a plant-wide economic optimization. The solution is then sent to low-level airside and waterside controllers that use more detailed models to compute the dispatched trajectories which meet the constraints. The low-level controllers follow the load computed in the high-level problem as closely as possible. One low-level airside controller is used per building, to ensure the problem can be solved quickly online.
+<br/><br/>
 
 Within the optimization problem, the following simplifications are made in the low-level problems:
 
+<ul>
+
+<li>
 Saturation of PI controllers is not explicitly modeled.
-        This effect is moderated by including bounds on requested cooling, but it still may introduce mismatch when constraints are active.
+This effect is moderated by including bounds on requested cooling, but it still may introduce mismatch when constraints are active.
+</li>
 
-The nonlinear equipment models in \eqref{eq:gordonng} through \eqref{eq:pump} are approximated as piecewise-linear.
-        This approximation allows the waterside problem to be solved as an MILP, and arbitrary accuracy can be achieved by using more pieces, although at the cost of computational speed \citep{risbeck:maravelias:rawlings:turney:2017}.
+<li>
+The nonlinear equipment models for the waterside system are approximated as piecewise-linear.
+This approximation allows the waterside problem to be solved as an MILP, and arbitrary accuracy can be achieved by using more pieces, although at the cost of computational speed.
+</li>
 
+<li>
 The approximate linear model for the storage tank is used instead of the full nonlinear model.
+</li>
 
+</ul>
 
-\subsection{Results.}
+<h4> Results </h4>
 
 This control architecture was applied to the case study system.
-The results from the high-level optimization are shown in Figure~\ref{fig:highlevel}.
-The high-level problem decides to use a combination of active and passive thermal energy storage to shift the power load from peak hours to off-peak hours.
+The results from the high-level optimization are shown below.
+The high-level problem decides to use a combination of active and passive thermal energy storage to shift the power load from peak hours to off-peak hours. One particular building is highlighted in red.
+
+<br/><br/>
+<center>
+<img src="./files/highlevelplot.png" alt="High-Level Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+<br/>
+
 These load profiles are sent to the low-level problems.
-Figure~\ref{fig:airside} shows the low-level airside results for all 500 zones, including the zone temperature setpoints dispatched to the system.
-Figure~\ref{fig:waterside} shows the equipment operation schedule computed by the low-level waterside optimization to meet the load from the high-level problem.
+The low-level airside results for all 500 zones, including the zone temperature setpoints dispatched to the system, are plotted below.
+ One particular zone is highlighted in red.
+
+<br/><br/>
+<center>
+<img src="./files/airsideplot.png" alt="Airside Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+<br/>
+
+The equipment operation schedule computed by the low-level waterside optimization to meet the load from the high-level problem is display below.
+
+<br/><br/>
+<center>
+<img src="./files/watersideplot.png" alt="Waterside Optimization Results" style="width:600px;height:auto;max-width:100%;max-height:100%">
+</center>
+<br/>
+
 Load shifting is able to reduce costs by purchasing more power when prices are lower during the early morning hours and charging the active storage tank as well as precooling buildings and purchasing less power when prices are more expensive during the peak hours by discharging the storage tank and letting the zones heat up to the upper bound of the comfort zones.
-As a result, the total cost for this control policy is \$78,689. 
-For comparison, the cost without load shifting is \$94,878, hence using optimization with TES results in 17\% cost savings.
+
+<br/><br/>
+
+As a result, the total cost for this control policy is $78,689. 
+For comparison, the cost without load shifting is $94,878, hence using optimization with thermal energy storage results in 17% cost savings.
 
 <br/><br/>
 </td>
@@ -132,7 +161,6 @@ For comparison, the cost without load shifting is \$94,878, hence using optimiza
 </tr>
 
 </table>
-
 
 </div>
 

@@ -78,28 +78,33 @@ This website is currently under construction. Please check back later.
 <br/><br/>
 <h3> Description </h3>
 
-<!--
-Include a brief description of the Stanford system (central plant, size, pumps, chillers, buildings, zones, etc.)
-<br/>
-Then write down control problem statement (what decisions must be made and what is the goal, i.e., minimize cost).
--->
+The HVAC system for the case study is a central plant that services the cooling needs of a 500-zone campus.
 
+<br/>
+<br/>
 <center>
 <img src="./files/hvac.png" alt="Large-Scale Airside and Waterside HVAC System" style="width:600px;height:auto;max-width:100%;max-height:100%">
 </center>
-
-The HVAC system for the case study is a central plant that services the cooling needs of a 500-zone campus.
-The HVAC plant has eight conventional chillers along with their supporting pumps and cooling towers.
-For simplicity, we do not consider heating equipment, such as boilers or heat-recovery chillers.
-Each of the chillers has minimum and maximum cooling capacities of 2.5 MW and 12.5 MW, yielding a total plant capacity of 100 MW cooling.
-Chilled water supply temperature is held constant at 5.5 $^\circ$C.
-In addition to the passive thermal energy storage present in the form of building mass, there is active thermal energy storage with a chilled water tank.
-The chilled water TES storage tank has a maximum capacity of 100 MWh cooling.
+<br/>
 
 The 500-zone campus contains 25 buildings, each with 20 zones that have independent local temperature controllers.
-All zone temperatures need to be kept between 20.5 and 22.5 $^\circ$C due to occupant comfort requirements.
-The models for the equipment and zones are presented in Section~\ref{sec:models}.
+All zone temperatures need to be kept between 20.5 and 22.5 \(^\circ\)C due to occupant comfort requirements.
+
+<h4> Equipment </h4>
+
+The HVAC plant has eight conventional chillers along with their supporting pumps and cooling towers.
+Each of the chillers has minimum and maximum cooling capacities of 2.5 MW and 12.5 MW, yielding a total plant capacity of 100 MW cooling.
+Chilled water supply temperature is held constant at 5.5 \(^\circ\)C.
+In addition to the passive thermal energy storage present in the form of building mass, there is active thermal energy storage with a chilled water tank.
+The chilled water TES storage tank has a maximum capacity of 100 MWh cooling.
+For simplicity, we do not consider heating equipment, such as boilers or heat-recovery chillers.
+
+<br/><br/>
+
+The models for the equipment and zones are presented in <a href="./models.html">Models</a>.
 The airside models describe the temperature dynamics in each of the 500 zones, and the waterside models describe the power consumption of the central plant equipment.
+
+<h4> Objective </h4>
 
 The aim of the control system is to minimize costs in the presence of time-varying electricity prices and a peak demand charge as well as environmental disturbances such as weather while meeting constraints on comfort and equipment. 
 The control system must determine the zone temperature setpoints and waterside equipment operation schedule.
@@ -110,7 +115,6 @@ The control system must determine the zone temperature setpoints and waterside e
 </tr>
 
 </table>
-
 
 </div>
 
