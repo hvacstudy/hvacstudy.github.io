@@ -1,16 +1,27 @@
 % Waterside equipment model parameters.
 data = struct();
 
+% Common temperature, constants, etc.
+common = struct();
+common.Tchws = 7; % *C
+common.Tchwr = 12; % *C
+common.Tcws = 29.44; % *C
+common.Tcwr = 35; % *C
+common.Twb = 26.67; % *C
+common.rho = 1000; % kg/m^3
+common.Cp = 4.184; % kJ/(kg *C)
+common.Tref = common.Tchwr; % *C
+
 % Chillers.
 chiller = struct();
 chiller.a = [1.18090; -254.56150; 0.000673480];
 chiller.Qnom = 10551; % kW
-chiller.Qmin = 0.2*chiller.Qnom;
-chiller.Qmax = 1.2*chiller.Qnom;
-chiller.Tchws = 7; % *C
-chiller.Tchwr = 12; % *C
-chiller.Tcws = 30; % *C.
-chiller.rhoCp = 4184; % kJ/(m^3 *C)
+chiller.Qmin = 0.2*chiller.Qnom; % kW
+chiller.Qmax = 1.2*chiller.Qnom; % kW
+chiller.Tchws = common.Tchws; % *C
+chiller.Tchwr = common.Tchwr; % *C
+chiller.Tcws = common.Tcws; % *C
+chiller.rhoCp = common.rho*common.Cp; % kJ/(m^3 *C)
 
 function [W, V, Qc] = chillermodel(Q, par)
     % Gordon-ng model.
@@ -27,6 +38,7 @@ figure()
 Q = linspace(chiller.Qmin, chiller.Qmax, 101);
 [W, V, Qc] = chillermodel(Q, chiller);
 subplot(3, 1, 1);
+title('Chiller Model');
 plot(Q, W, '-k');
 ylabel('W (kW)');
 subplot(3, 1, 2);
@@ -36,14 +48,13 @@ subplot(3, 1, 3);
 plot(Q, Qc, '-k');
 ylabel('Qc (kW)');
 xlabel('Q (kW)');
-title('Chiller Model');
 
 % Pumps. Empirical model.
 pump = struct();
 pump.b = [19.9767073197906, 1000, -14.3598440800279, -21.4982225348288];
 pump.Vnom = 0.7571;  % m^3/s
-pump.Vmin = 0.2*pump.Vnom;
-pump.Vmax = 1.2*pump.Vnom;
+pump.Vmin = 0.2*pump.Vnom; % m^3/s
+pump.Vmax = 1.2*pump.Vnom; % m^3/s
 
 function W = pumpmodel(V, par)
     % Empirical pump model.
@@ -65,20 +76,18 @@ tower.Qnom = 2461.83; % kW
 tower.scale = 4;
 tower.Qmin = 0.5*tower.Qnom*tower.scale;
 tower.Qmax = 1.25*tower.Qnom*tower.scale;
-tower.kappa = 1.8666e-05; % kJ/kg
-tower.Wnom = 15; % kW
-tower.manom = 92.97; % kg/s
-tower.Twb = 26.67; % *C
-tower.mwnom = 80.44; % kg/s
-tower.Tcws = 30; % *C
-tower.Cp = 4.184; % kJ/(kg *C)
+tower.kappa = 1.8666e-05; % kJ/kg^3
+tower.Twb = common.Twb; % *C
+tower.Tcws = common.Tcws; % *C
+tower.Tcwr = common.Tcwr; % *C
+tower.Cp = common.Cp; % kJ/(kg *C)
 
 function W = towermodel(Q, par)
     % Tower model.
     Q = Q/par.scale;
-    Tcwr = Q/(par.mwnom*par.Cp) + par.Tcws;
-    ma = par.c(2)^(1/par.c(3))*(par.c(1)*(Tcwr - par.Twb)./Q ...
-         - par.mwnom.^(-par.c(3))).^(-1/par.c(3));
+    mw = Q/(par.Cp*(par.Tcwr - par.Tcws));
+    ma = par.c(2)^(1/par.c(3))*(par.c(1)*(par.Tcwr - par.Twb)./Q ...
+         - mw.^(-par.c(3))).^(-1/par.c(3));
     W = par.scale*par.kappa*ma.^3;
 end%function
 
@@ -87,8 +96,34 @@ figure();
 plot(Q, towermodel(Q, tower), '-k');
 xlabel('Q (kW)');
 ylabel('W (kW)');
+title('Cooling Tower Model');
+
+% Storage tank parameters.
+tank = StorageTank('Tchwr', common.Tchwr, 'Tchws', common.Tchws, ...
+                   'Tref', common.Tref, 'uvar', 'enthalpy');
+Vcold0 = 0.01*tank.Vmax;
+Hcold0 = tank.rhocp*Vcold0*(tank.Tchws - tank.Tref);
+Vhot0 = tank.Vmax - Vcold0; 
+Hhot0 = tank.rhocp*Vhot0*(tank.Tchwr - tank.Tref);
+
+x0 = [Hcold0; Vcold0; Hhot0; Vhot0];
+
+tank = StorageTank('uvar', 'enthalpy'); % Simulate using enthalpy.
+Nsim = 240;
+t = (1:Nsim)*tank.Delta;
+
+urand = 2*(rand(size(t)) - 1);
+usin = 2*sin(2*pi()*t/24);
+uask = 0.125*tank.Vmax*tank.rhocp*(tank.Tchws - tank.Tref)*(urand + usin);
+[x, uget] = tank.simulate(x0, uask);
+tank.plot(x);
+subplot(3, 1, 1);
+title('Storage Tank Model');
+
+tank = struct('Vtot', tank.Vmax, 'K', tank.k); % Save key parameters.
 
 % Save composite data.
+data.common = common;
 data.chiller = chiller;
 data.pump = pump;
 data.tower = tower;
